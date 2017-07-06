@@ -1,10 +1,13 @@
 import * as React from 'react'
+import * as styles from './tag-input.css'
 
-const styles = require('./tag-input.css')
+import Menu from './menu'
 
 interface MenuItem {
-    key: string
+    key?: string
     value: string
+    selected?: boolean
+    name?: string
 }
 
 interface Props {
@@ -15,11 +18,13 @@ interface State {
     selected: string[]
     input: string
     active: boolean
+    options: MenuOption[]
 }
 interface Child {
     props: {
         children: string
         value: string
+        selected?: boolean
     }
 }
 
@@ -35,19 +40,33 @@ export default class TagInput extends React.Component <Props, State> {
         this.state = {
             selected: props.selected,
             input: '',
-            active: false
+            active: false,
+            options: this.loadMenu(props)
+
         }
         this.handleInput = this.handleInput.bind(this)
         this.inputValue = ''
         this.inputWidth = 30
         const children =  React.Children.toArray(props.children) as Child[]
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
+       
+    }
+
+    loadMenu(props):Array<MenuOption>{
+        const children =  React.Children.toArray(props.children) as Child[]
+        return children.map(item=>({
+            name: item.props.children,
+            value: item.props.value,
+            selected: item.props.selected
+        })) 
     }
 
     componentWillReceiveProps(nextProps){
         this.setState({selected: nextProps.selected})
         const children =  React.Children.toArray(nextProps.children) as Child[]
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
+        // console.log(nextProps.children)
+        // this.setState({options: this.loadMenu(nextProps)})
     }
 
     handleFocus(){
@@ -137,7 +156,8 @@ export default class TagInput extends React.Component <Props, State> {
     }
 
     render(){
-        
+         console.log(this.state.options)
+
         if(!this.menu) return null
 
         const tagStyle = ['label', 'label-default',  styles.tag].join(' ')
@@ -186,7 +206,13 @@ export default class TagInput extends React.Component <Props, State> {
                     ref={span=>this.hidden = span}>
                     {this.state.input}
                 </span>
-                {menus}
+                {/*{menus}*/}
+                <Menu
+                    onSelect={console.log}
+                    onClose={console.log}
+                    visible={true}
+                    options={this.state.options}
+                />
             </div>
         )
     }
