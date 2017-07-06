@@ -1,4 +1,44 @@
 .container {
-    color: navy;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
+    font: 18px 'Roboto', sans-serif;
     font-size: 16pt;
+    max-width: 400px;
+    box-sizing: border-box;
+    border: 2px solid #C9C9C9;
+}
+
+.container input {
+    /*flex: 1 0 50%;*/
+    border: none;
+    outline: none;
+    padding-left: 0;
+}
+
+.icon-container {
+    display: table;
+    flex: 1 0 38px;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    background-color: lightgreen;
+}
+.icon-container span {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    /*width: 20px;
+    height: 20px;
+    margin: 9px;*/
+    font-size: 16px;
+    /*border: 1px solid black;*/
+}
+.left-spacer{
+    flex: 1 0 14px;
+}
+.spacer {
+    flex: 100 10 100%;
 }
