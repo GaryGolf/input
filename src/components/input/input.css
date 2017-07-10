@@ -1,44 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 .container {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     height: 38px;
-    font: 18px 'Roboto', sans-serif;
-    font-size: 16pt;
-    max-width: 400px;
+    font: 16px 'Roboto', sans-serif;
+    max-width: 350px;
     box-sizing: border-box;
-    border: 2px solid #C9C9C9;
+    color: black;
+    border: 1px solid #C9C9C9;
+    transition: box-shadow 175ms, border 175ms;
 }
 
 .container input {
-    /*flex: 1 0 50%;*/
+    flex: 1 100 100%;
     border: none;
     outline: none;
     padding-left: 0;
 }
-
+.container ::-webkit-input-placeholder, .container ::-moz-placeholder, .container :-ms-input-placeholder {
+    font: 16px 'Roboto', sans-serif;
+}
 .icon-container {
     display: table;
     flex: 1 0 38px;
     width: 38px;
     height: 38px;
     cursor: pointer;
-    background-color: lightgreen;
 }
 .icon-container span {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    /*width: 20px;
-    height: 20px;
-    margin: 9px;*/
     font-size: 16px;
-    /*border: 1px solid black;*/
+    transition: color 175ms;
 }
 .left-spacer{
     flex: 1 0 14px;
 }
 .spacer {
-    flex: 100 10 100%;
+    flex: 1 10 100%;
+}
+
+.icon-0 {
+    color: #209AC4;
+}
+.icon-1 {
+    color: #999999;
+}
+.icon-2 {
+    color: #C9C9C9;
+}
+
+.container:hover {
+    border-color: #209AC4;
+}
+
+.container:hover .icon-1 {
+     color: #209AC4;
+}
+
+.container:hover .icon-0 {
+     color: #1A7B9D;
+}
+
+[data-status="focused"] {
+    box-shadow: 0 0 8px #209AC4;
 }
