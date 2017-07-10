@@ -4,6 +4,7 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     height: 38px;
     font: 16px 'Roboto', sans-serif;
     max-width: 350px;
@@ -23,6 +24,17 @@
 .container ::placeholder {
     font: 16px 'Roboto', sans-serif;
 }
+
+.container .error-message {
+    display: none;
+    font: 10px 'Roboto', sans-serif;
+    color: #DE3318;
+    position: absolute;
+    top:39px;
+    margin-top: 6px;
+}
+
+
 .icon-container {
     display: table;
     flex: 1 0 38px;
@@ -54,21 +66,54 @@
     color: #C9C9C9;
 }
 
-.container:hover:not([data-status="disabled"]) {
+.container[data-status="normal"]:hover {
     border-color: #209AC4;
 }
 
-.container:hover:not([data-status="disabled"]) .icon-1 {
+.container[data-status="normal"]:hover .icon-1 {
      color: #209AC4;
 }
 
-.container:hover:not([data-status="disabled"]) .icon-0 {
+.container[data-status="normal"]:hover .icon-0 {
      color: #1A7B9D;
 }
 
-[data-status="focused"] {
+/*
+.container input:invalid:not(:focus) {
+    border-bottom: 2px dashed #DE3318;
+}
+
+.container input:invalid:not(:focus) + .error-message {
+    display: block
+}
+*/
+
+.container[data-status="focused"] {
     box-shadow: 0 0 8px #209AC4;
 }
+.container[data-status="success"] {
+    border: 1px solid #009900;
+}
+
+.container[data-status="error"] {
+    border: 1px solid #DE3318;
+}
+.container[data-status="error"] .error-message{
+    display: block;
+    color: #DE3318;
+}
+.container[data-status="warning"] {
+    border: 1px solid #DD8700;
+}
+.container[data-status="warning"] .error-message{
+    display: block;
+    color: #DD8700;
+}
+
+
+
+
+
 
 [data-status="disabled"] {
     background-color: #EEF1F6;

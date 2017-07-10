@@ -4,12 +4,40 @@ import Input from './input'
 import TagInput from './tag-input'
 
 interface Props {}
-interface State {}
+interface State {
+    error: string
+    warning: string
+}
 
-export default class Demo extends React.Component<null, null> {
+export default class Demo extends React.Component<Props, State> {
+    
+    constructor(props:Props){
+        super(props)
+
+        this.state = {
+            error: null,
+            warning: null,
+        }
+    }
+
+    handleInputSubmit(value: string){
+        if(value.length!=12){
+            const error = 'Номер ИНН должен содержать 12 цифровых символов'
+            const warning = null
+            return this.setState({error, warning})
+        } else if(value!="334500002334") {
+            const error = null;
+            const warning = 'Желательно, чтобы ИНН совпадал с "334500002334"'
+            return this.setState({error, warning})
+        } else {
+            const error = null;
+            const warning = null
+            return this.setState({error, warning})
+        }
+    }
+
     render(){
 
-       
 
         return (
             <div style={{margin:'20px'}}>
@@ -19,16 +47,17 @@ export default class Demo extends React.Component<null, null> {
                 <Input
                     placeholder="ИНН"
                     name="inn"
-                    value="334500002334"
+                    defaultValue="334500002334"
                     maxLength={12}
 
                     pattern="[0-9]{12}"
                     title="Номер ИНН должен содержать 12 цифровых символов"
-                    onFocus={()=>console.log('focus')}
+                    // onFocus={()=>console.log('focus')}
                     // onBlur={()=>console.log('blur')}
                     // onChange={console.log}
-                    onSubmit={console.log}
-                    disabled
+                    onSubmit={this.handleInputSubmit.bind(this)}
+                    error={this.state.error}
+                    warning={this.state.warning}
                 >
                     <span 
                         className="glyphicon glyphicon-ok-sign"

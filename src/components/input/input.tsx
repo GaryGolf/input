@@ -10,13 +10,15 @@ interface Icon {
 interface Props {
     className?: string
     name?: string
-    value?: string
+    defaultValue?: string
     type?: string
     placeholder?: string
     pattern?: string
     title?: string
     disabled?: boolean
     maxLength?: number
+    error?: string
+    warning?: string
     onFocus?:()=>void
     onBlur?:()=>void
     onChange?:(value:string)=>void
@@ -34,15 +36,16 @@ export default class Input extends React.Component<Props, State> {
 
     constructor(props:Props){
         super(props)
-        const status = props.disabled? Status.disabled : Status.normal
+        const {disabled, error, warning} = props
+        const status = disabled? Status.disabled : !!error? Status.error : !!warning? Status.warning :Status.normal
         this.state = { status }
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.disabled!=this.props.disabled) {
-            const status = nextProps.disabled?Status.disabled:Status.normal
-            this.setState({status})
-        }
+        const {disabled, error, warning} = nextProps
+        const status = disabled? Status.disabled : !!error? Status.error : !!warning? Status.warning :Status.success
+        this.setState({status})    
+        console.log(status)
     }
 
     handleFocus(){
@@ -69,7 +72,6 @@ export default class Input extends React.Component<Props, State> {
         const {onChange, onSubmit} = this.props
         const value = event.target.value
         if(!!onChange) onChange(value)
-        if(!!onSubmit) onSubmit(value)
     }
 
     handleKeyUp(event) {
@@ -90,7 +92,7 @@ export default class Input extends React.Component<Props, State> {
 
     render(){
 
-        const {name, type, placeholder, pattern, title, maxLength, disabled} = this.props
+        const {name, type, defaultValue, placeholder, pattern, title, maxLength, disabled} = this.props
 
         const children = React.Children.toArray(this.props.children)
             .filter(item=>item['type']=='span')
@@ -100,7 +102,7 @@ export default class Input extends React.Component<Props, State> {
                 <span className={item.props.className}/>
                 </div>)
        
-        const inputProps = {name, type, placeholder, pattern, title, maxLength, disabled}
+        const inputProps = {name, type, defaultValue, placeholder, pattern, title, maxLength, disabled}
        
         return (
         <div className={styles.container} 
@@ -114,6 +116,7 @@ export default class Input extends React.Component<Props, State> {
                 onKeyUp={this.handleKeyUp.bind(this)}
                 onSelect={this.handleSelect.bind(this)}
             />
+            <span className={styles['error-message']}>{this.props.error || this.props.warning}</span>
             {children.slice(0,2)}
         </div>
         )
