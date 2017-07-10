@@ -15,6 +15,7 @@ interface Props {
     placeholder?: string
     pattern?: string
     title?: string
+    disabled?: boolean
     maxLength?: number
     onFocus?:()=>void
     onBlur?:()=>void
@@ -33,23 +34,32 @@ export default class Input extends React.Component<Props, State> {
 
     constructor(props:Props){
         super(props)
-        this.state = {
-            status: Status.normal
+        const status = props.disabled? Status.disabled : Status.normal
+        this.state = { status }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.disabled!=this.props.disabled) {
+            const status = nextProps.disabled?Status.disabled:Status.normal
+            this.setState({status})
         }
     }
 
     handleFocus(){
         const status = Status.focused
+        if(this.props.disabled) return
         this.setState({status})
         if(!!this.props.onFocus) this.props.onFocus()
     }
     handleBlur(){
         const status = Status.normal
+        if(this.props.disabled) return
         this.setState({status})
         if(!!this.props.onBlur) this.props.onBlur()
     }
     handleChange(event){
         const value = event.target.value
+        if(this.props.disabled) return
         const status = !value? Status.normal:Status.changed
         this.setState({status})
         if(!!this.props.onChange) this.props.onChange(value)
@@ -65,6 +75,7 @@ export default class Input extends React.Component<Props, State> {
     handleKeyUp(event) {
         const value = event.target.value
         const {onChange, onSubmit} = this.props
+        if(this.props.disabled) return
 
         switch(event.key){
             case 'Escape' :
@@ -79,13 +90,17 @@ export default class Input extends React.Component<Props, State> {
 
     render(){
 
-        const {name, type, placeholder, pattern, title, maxLength} = this.props
+        const {name, type, placeholder, pattern, title, maxLength, disabled} = this.props
 
         const children = React.Children.toArray(this.props.children)
             .filter(item=>item['type']=='span')
-            .map((item, idx) => <div key={idx} className={[styles['icon-container'],styles['icon-'+idx]].join(' ')}>{item}</div>)
+            .map((item:any, idx) => <div key={idx} 
+                onClick={e=>disabled?e.stopPropagation():item.props.onClick(e)}
+                className={[styles['icon-container'],styles['icon-'+idx]].join(' ')}>
+                <span className={item.props.className}/>
+                </div>)
        
-        const inputProps = {name, type, placeholder, pattern, title, maxLength}
+        const inputProps = {name, type, placeholder, pattern, title, maxLength, disabled}
        
         return (
         <div className={styles.container} 

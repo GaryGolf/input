@@ -18,8 +18,9 @@
     border: none;
     outline: none;
     padding-left: 0;
+    background-color: transparent; 
 }
-.container ::-webkit-input-placeholder, .container ::-moz-placeholder, .container :-ms-input-placeholder {
+.container ::placeholder {
     font: 16px 'Roboto', sans-serif;
 }
 .icon-container {
@@ -53,18 +54,31 @@
     color: #C9C9C9;
 }
 
-.container:hover {
+.container:hover:not([data-status="disabled"]) {
     border-color: #209AC4;
 }
 
-.container:hover .icon-1 {
+.container:hover:not([data-status="disabled"]) .icon-1 {
      color: #209AC4;
 }
 
-.container:hover .icon-0 {
+.container:hover:not([data-status="disabled"]) .icon-0 {
      color: #1A7B9D;
 }
 
 [data-status="focused"] {
     box-shadow: 0 0 8px #209AC4;
+}
+
+[data-status="disabled"] {
+    background-color: #EEF1F6;
+    border-color: #D1DBE5;
+}
+
+.container[data-status="disabled"] span{
+    color: #C9C9C9;
+    cursor: default;
+}
+.container[data-status="disabled"] ::placeholder{
+      color: #C9C9C9;
 }
