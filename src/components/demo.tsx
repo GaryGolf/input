@@ -10,7 +10,7 @@ interface State {
 }
 
 export default class Demo extends React.Component<Props, State> {
-    
+
     constructor(props:Props){
         super(props)
 
@@ -43,17 +43,18 @@ export default class Demo extends React.Component<Props, State> {
             <div style={{margin:'20px'}}>
                 <br/><br/>
               
-                <form onSubmit={e=>e.preventDefault()}>
+                {/*<form onSubmit={e=>e.preventDefault()}>*/}
                 <Input
                     placeholder="ИНН"
-                    name="inn"
-                    defaultValue="334500002334"
+                    // name="inn"
+                    // defaultValue="334500002334"
                     maxLength={12}
-
-                    pattern="[0-9]{12}"
-                    title="Номер ИНН должен содержать 12 цифровых символов"
-                    // onFocus={()=>console.log('focus')}
-                    // onBlur={()=>console.log('blur')}
+                    //disabled
+                    //pattern="[0-9]{12}"
+                    //title="Ошибка, введите ИНН"
+                    //autoFocus
+                    onFocus={()=>console.log('focus')}
+                    onBlur={()=>console.log('blur')}
                     // onChange={console.log}
                     onSubmit={this.handleInputSubmit.bind(this)}
                     error={this.state.error}
@@ -72,7 +73,7 @@ export default class Demo extends React.Component<Props, State> {
                         onClick={()=>console.log('question')}
                     />
                 </Input>
-                </form>
+                {/*</form>*/}
             </div>
         )
     }

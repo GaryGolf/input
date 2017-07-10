@@ -28,7 +28,6 @@
 .container .error-message {
     display: none;
     font: 10px 'Roboto', sans-serif;
-    color: #DE3318;
     position: absolute;
     top:39px;
     margin-top: 6px;
@@ -78,15 +77,15 @@
      color: #1A7B9D;
 }
 
-/*
+
 .container input:invalid:not(:focus) {
     border-bottom: 2px dashed #DE3318;
 }
-
 .container input:invalid:not(:focus) + .error-message {
-    display: block
+    display: block;
+    color: #DE3318;
 }
-*/
+
 
 .container[data-status="focused"] {
     box-shadow: 0 0 8px #209AC4;
