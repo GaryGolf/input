@@ -2,20 +2,16 @@ import * as React from 'react'
 import * as styles from './input.css'
 import * as Status from './status'
 
-interface Icon {
-    className:string
-    onClick():void
-}
 
 interface Props {
     className?: string
     name?: string
     defaultValue?: string
-    type?: string
     placeholder?: string
     pattern?: string
     title?: string
     disabled?: boolean
+    autoFocus?: boolean
     maxLength?: number
     error?: string
     warning?: string
@@ -45,7 +41,6 @@ export default class Input extends React.Component<Props, State> {
         const {disabled, error, warning} = nextProps
         const status = disabled? Status.disabled : !!error? Status.error : !!warning? Status.warning :Status.success
         this.setState({status})    
-        console.log(status)
     }
 
     handleFocus(){
@@ -84,7 +79,7 @@ export default class Input extends React.Component<Props, State> {
                 this.input.value = ''
                 break
             case 'Enter' :
-                this.setState({status: !value? Status.normal:Status.submited})
+                this.setState({status:  Status.normal})
                 if(!!onSubmit) onSubmit(value)
                 break
         }
@@ -92,17 +87,17 @@ export default class Input extends React.Component<Props, State> {
 
     render(){
 
-        const {name, type, defaultValue, placeholder, pattern, title, maxLength, disabled} = this.props
+        const {name, defaultValue, placeholder, pattern, title, maxLength, autoFocus, disabled} = this.props
 
         const children = React.Children.toArray(this.props.children)
             .filter(item=>item['type']=='span')
             .map((item:any, idx) => <div key={idx} 
-                onClick={e=>disabled?e.stopPropagation():item.props.onClick(e)}
+                onClick={e=>disabled||!item.props.onClick?e.stopPropagation():item.props.onClick(e)}
                 className={[styles['icon-container'],styles['icon-'+idx]].join(' ')}>
                 <span className={item.props.className}/>
                 </div>)
        
-        const inputProps = {name, type, defaultValue, placeholder, pattern, title, maxLength, disabled}
+        const inputProps = {name, defaultValue, placeholder, pattern, title, maxLength, autoFocus, disabled}
        
         return (
         <div className={styles.container} 
