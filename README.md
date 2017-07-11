@@ -26,4 +26,4 @@ __API will change, under development__
 - onBlur():void
 - onChange(value:string):void
 - onSubmit(value:string):void
-- children up to 3 icons: <span className="glyphicon glyphicon-ok" onClick={this.handleClick.bind(this)}/>
+- children up to 3 icons: `<span className="glyphicon glyphicon-ok" onClick={this.handleClick.bind(this)}/>`
