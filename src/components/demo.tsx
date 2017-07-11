@@ -46,13 +46,13 @@ export default class Demo extends React.Component<Props, State> {
                 {/*<form onSubmit={e=>e.preventDefault()}>*/}
                 <Input
                     placeholder="ИНН"
-                    // name="inn"
-                    // defaultValue="334500002334"
+                    name="inn"
+                    defaultValue="334500002334"
                     maxLength={12}
                     //disabled
-                    //pattern="[0-9]{12}"
-                    //title="Ошибка, введите ИНН"
-                    //autoFocus
+                    pattern="[0-9]{12}"
+                    title="Ошибка, введите ИНН"
+                    autoFocus
                     onFocus={()=>console.log('focus')}
                     onBlur={()=>console.log('blur')}
                     // onChange={console.log}
