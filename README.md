@@ -1,10 +1,10 @@
 # React Components
 
-__API will change, under development__
+__API will change, under active development__
 
 ## Local setup
 
-- Install dependancies with `npm install`
+- Install dependencies with `npm install`
 - Run demo with `npm start`
 
 ## Components
